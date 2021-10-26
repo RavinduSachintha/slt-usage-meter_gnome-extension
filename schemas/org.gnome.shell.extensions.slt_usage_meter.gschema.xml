@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.slt_usage_meter" path="/org/gnome/shell/extensions/slt_usage_meter/">
+    <!-- See also: https://developer.gnome.org/glib/stable/gvariant-format-strings.html -->
+    
+    <key name="access-token" type="s">
+      <default>"access_token"</default>
+      <description>JWT token for login</description>
+    </key>
+
+    <key name="token-type" type="s">
+      <default>"token_type"</default>
+      <description>JWT token for login</description>
+    </key>
+
+    <key name="subscriber-id" type="s">
+      <default>"subscriber_id"</default>
+      <description>JWT token for login</description>
+    </key>
+
+    <key name="expires-in" type="i">
+      <default>0</default>
+      <description>JWT token for login</description>
+    </key>
+
+    <key name="consented-on" type="i">
+      <default>0</default>
+      <description>JWT token for login</description>
+    </key>
+
+    <key name="scope" type="s">
+      <default>"scope"</default>
+      <description>JWT token for login</description>
+    </key>
+
+    <key name="refresh-token" type="s">
+      <default>"refresh_token"</default>
+      <description>JWT token for login</description>
+    </key>
+
+    <key name="refresh-token-expires-in" type="i">
+      <default>0</default>
+      <description>JWT token for login</description>
+    </key>
+  </schema>
+</schemalist>

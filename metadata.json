@@ -1,0 +1,10 @@
+{
+  "name": "Slt Usage Meter",
+  "description": "Displays usage information for your SLT connection",
+  "uuid": "slt_usage_meter@ravindu.dhahs.com",
+  "version": 1,
+  "shell-version": [
+    "3.36",
+    "3.38"
+  ]
+}
