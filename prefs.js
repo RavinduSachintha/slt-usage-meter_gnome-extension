@@ -1,61 +1,52 @@
-'use strict';
+"use strict";
 
 const Gio = imports.gi.Gio;
 const Gtk = imports.gi.Gtk;
+const GObject = imports.gi.GObject;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
-
-function init() {
-}
+function init() {}
 
 function buildPrefsWidget() {
-
-    // Copy the same GSettings code from `extension.js`
-    this.settings = ExtensionUtils.getSettings(
-        'org.gnome.shell.extensions.slt_usage_meter');
-
-    // Create a parent widget that we'll return from this function
-    let prefsWidget = new Gtk.Grid({
-        margin: 18,
-        column_spacing: 12,
-        row_spacing: 12,
-        visible: true
-    });
-
-    // Add a simple title and add it to the prefsWidget
-    let title = new Gtk.Label({
-        label: `<b>${Me.metadata.name} Preferences</b>`,
-        halign: Gtk.Align.START,
-        use_markup: true,
-        visible: true
-    });
-    prefsWidget.attach(title, 0, 0, 2, 1);
-
-    // Create a label & switch for `show-indicator`
-    let toggleLabel = new Gtk.Label({
-        label: 'Show Extension Indicator:',
-        halign: Gtk.Align.START,
-        visible: true
-    });
-    prefsWidget.attach(toggleLabel, 0, 1, 1, 1);
-
-    let toggle = new Gtk.Switch({
-        active: this.settings.get_boolean ('show-indicator'),
-        halign: Gtk.Align.END,
-        visible: true
-    });
-    prefsWidget.attach(toggle, 1, 1, 1, 1);
-
-    // Bind the switch to the `show-indicator` key
-    this.settings.bind(
-        'show-indicator',
-        toggle,
-        'active',
-        Gio.SettingsBindFlags.DEFAULT
-    );
-
-    // Return our widget which will be added to the window
-    return prefsWidget;
+  let widget = new MyPrefsWidget();
+  widget.show_all();
+  return widget;
 }
+
+const MyPrefsWidget = GObject.registerClass(
+  class MyPrefsWidget extends Gtk.Box {
+    _init(params) {
+      super._init(params);
+
+      this.margin = 20;
+      this.set_spacing(15);
+      this.set_orientation(Gtk.Orientation.VERTICAL);
+
+      this.connect("destroy", Gtk.main_quit);
+
+      let myLabel = new Gtk.Label({
+        label: "Translated Text",
+      });
+
+      let spinButton = new Gtk.SpinButton();
+      spinButton.set_sensitive(true);
+      spinButton.set_range(-60, 60);
+      spinButton.set_value(0);
+      spinButton.set_increments(1, 2);
+
+      spinButton.connect("value-changed", function (w) {
+        log(w.get_value_as_int());
+      });
+
+      let hBox = new Gtk.Box();
+      hBox.set_orientation(Gtk.Orientation.HORIZONTAL);
+
+      hBox.pack_start(myLabel, false, false, 0);
+      hBox.pack_end(spinButton, false, false, 0);
+
+      this.add(hBox);
+    }
+  }
+);

@@ -8,19 +8,14 @@ const Gio = imports.gi.Gio;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-
 // constants
-const xIbmClientId = "622cc49f-6067-415e-82cd-04b1b76f6377";
 const username = "";
 const password = "";
 const schemaId = "org.gnome.shell.extensions.slt_usage_meter";
 const expiringOffset = 30;
 
-const vasDataUrl =
-  "https://omniscapp.slt.lk/mobitelint/slt/sltvasservices/dashboard/vas_data";
-const authUrl =
-  "https://omniscapp.slt.lk/mobitelint/slt/sltvasoauth/oauth2/token";
+const Me = imports.misc.extensionUtils.getCurrentExtension();
+const schemaData = getSchemaValues();
 
 // get the schema values
 function getSchemaValues() {
@@ -45,14 +40,15 @@ function getSchemaValues() {
 function send_auth_request() {
   let soupSyncSession = new Soup.SessionSync();
 
-  const authReqParams =
-    `client_id=${xIbmClientId}` +
+  let url = schemaData.get_string("auth-url");
+  let authReqParams =
+    `client_id=${schemaData.get_string("xibmclientid")}` +
     `&grant_type=password` +
     `&password=${password}` +
     `&scope=scope1` +
     `&username=${username}`;
 
-  let message = Soup.Message.new("POST", authUrl);
+  let message = Soup.Message.new("POST", url);
   message.request_headers.append("Accept", "application/json");
   message.set_request("application/x-www-form-urlencoded", 2, authReqParams);
 
@@ -74,7 +70,7 @@ function send_request(url, token, subscriberId, type = "GET") {
 
   let message = Soup.Message.new(type, url);
   message.request_headers.append("Authorization", `Bearer ${token}`);
-  message.request_headers.append("x-ibm-client-id", xIbmClientId);
+  message.request_headers.append("x-ibm-client-id", schemaData.get_string("xibmclientid"));
   message.request_headers.append("subscriberid", subscriberId);
   message.request_headers.set_content_type("application/json", null);
 
@@ -106,7 +102,6 @@ function setAuthDataFromSchema(schemaData, data) {
 
 // check usage button action
 function check_usage_btn_action() {
-  let schemaData = getSchemaValues();
   let consentedOn = schemaData.get_int("consented-on");
   let expiresIn = schemaData.get_int("expires-in");
 
@@ -122,16 +117,17 @@ function check_usage_btn_action() {
     }
   }
 
+  let url = schemaData.get_string("vas-data-url");
   let authToken = schemaData.get_string("access-token");
   let subscriberId = schemaData.get_string("subscriber-id");
 
-  data = send_request(vasDataUrl, authToken, subscriberId);
+  data = send_request(url, authToken, subscriberId);
   if (data) {
     let limitData = parseFloat(data.package_summary.limit);
     let usedData = parseFloat(data.package_summary.used);
     Main.notify(
       "SLT Usage Meter",
-      `Used: ${usedData}GB | Remains: ${limitData - usedData}GB`
+      `Used: ${usedData}GB | Remains: ${(limitData - usedData).toFixed(1)}GB`
     );
   }
 }
@@ -144,11 +140,9 @@ const SltUsageMeter = new Lang.Class({
   _init: function () {
     this.parent(0.0);
 
-    let icon = new St.Icon({
-      icon_name: "face-cool",
-      icon_size: 18,
-    });
-    this.actor.add_child(icon);
+    // let gicon = Gio.icon_new_for_string(Me.path + "/assets/ext_icon.png");
+    let icon = new St.Icon({ style_class: "ext_icon" });
+    this.add_child(icon);
 
     let menuItem = new PopupMenu.PopupMenuItem("Check Usage");
     menuItem.actor.connect("button-press-event", check_usage_btn_action);
