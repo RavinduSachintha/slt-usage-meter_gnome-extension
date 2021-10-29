@@ -19,7 +19,10 @@ function getSchemaValues() {
   let GioSSS = Gio.SettingsSchemaSource;
 
   let schemaSource = GioSSS.new_from_directory(
-      Me.dir.get_child("schemas").get_path(), GioSSS.get_default(), false);
+    Me.dir.get_child("schemas").get_path(),
+    GioSSS.get_default(),
+    false
+  );
 
   let schemaObj = schemaSource.lookup(Cons.schemaId, true);
 
@@ -27,7 +30,7 @@ function getSchemaValues() {
     throw new Error("cannot find schemas");
   }
 
-  return new Gio.Settings({settings_schema : schemaObj});
+  return new Gio.Settings({ settings_schema: schemaObj });
 }
 
 // send login request
@@ -35,11 +38,12 @@ function send_auth_request() {
   let soupSyncSession = new Soup.SessionSync();
 
   let url = schemaData.get_string("auth-url");
-  let authReqParams = `client_id=${schemaData.get_string("xibmclientid")}` +
-                      `&grant_type=password` +
-                      `&password=${Cons.password}` +
-                      `&scope=scope1` +
-                      `&username=${Cons.username}`;
+  let authReqParams =
+    `client_id=${schemaData.get_string("xibmclientid")}` +
+    `&grant_type=password` +
+    `&password=${Cons.password}` +
+    `&scope=scope1` +
+    `&username=${Cons.username}`;
 
   let message = Soup.Message.new("POST", url);
   message.request_headers.append("Accept", "application/json");
@@ -63,8 +67,10 @@ function send_request(url, token, subscriberId, type = "GET") {
 
   let message = Soup.Message.new(type, url);
   message.request_headers.append("Authorization", `Bearer ${token}`);
-  message.request_headers.append("x-ibm-client-id",
-                                 schemaData.get_string("xibmclientid"));
+  message.request_headers.append(
+    "x-ibm-client-id",
+    schemaData.get_string("xibmclientid")
+  );
   message.request_headers.append("subscriberid", subscriberId);
   message.request_headers.set_content_type("application/json", null);
 
@@ -119,21 +125,23 @@ function check_usage_btn_action() {
   if (data) {
     let limitData = parseFloat(data.package_summary.limit);
     let usedData = parseFloat(data.package_summary.used);
-    Main.notify("SLT Usage Meter", `Used: ${usedData}GB | Remains: ${
-                                       (limitData - usedData).toFixed(1)}GB`);
+    Main.notify(
+      "SLT Usage Meter",
+      `Used: ${usedData}GB | Remains: ${(limitData - usedData).toFixed(1)}GB`
+    );
   }
 }
 
 // slt usage meter class
 const SltUsageMeter = new Lang.Class({
-  Name : "SltUsageMeter.indicator",
-  Extends : PanelMenu.Button,
+  Name: "SltUsageMeter.indicator",
+  Extends: PanelMenu.Button,
 
-  _init : function() {
+  _init: function () {
     this.parent(0.0);
 
     let gicon = Gio.icon_new_for_string(Me.path + "/assets/ext_icon.png");
-    let icon = new St.Icon({gicon, icon_size : Cons.iconSize});
+    let icon = new St.Icon({ gicon, icon_size: Cons.iconSize });
     this.add_child(icon);
 
     let menuItem = new PopupMenu.PopupMenuItem("Check Usage");
@@ -146,7 +154,7 @@ const SltUsageMeter = new Lang.Class({
 // initialize the extension
 function init() {
   log("Slt Usage Meter extension initalized");
-  Cons.iconSize = Math.round(Panel.PANEL_ICON_SIZE * 4 / 5);
+  Cons.iconSize = Math.round((Panel.PANEL_ICON_SIZE * 4) / 5);
 }
 
 // enable the extension
@@ -154,8 +162,12 @@ function enable() {
   log("Slt Usage Meter extension enabled");
 
   let _indicator = new SltUsageMeter();
-  Main.panel._addToPanelBox("SltUsageMeter", _indicator, 1,
-                            Main.panel._rightBox);
+  Main.panel._addToPanelBox(
+    "SltUsageMeter",
+    _indicator,
+    1,
+    Main.panel._rightBox
+  );
 }
 
 // disable the extension
