@@ -70,7 +70,10 @@ function send_request(url, token, subscriberId, type = "GET") {
 
   let message = Soup.Message.new(type, url);
   message.request_headers.append("Authorization", `Bearer ${token}`);
-  message.request_headers.append("x-ibm-client-id", schemaData.get_string("xibmclientid"));
+  message.request_headers.append(
+    "x-ibm-client-id",
+    schemaData.get_string("xibmclientid")
+  );
   message.request_headers.append("subscriberid", subscriberId);
   message.request_headers.set_content_type("application/json", null);
 
@@ -140,8 +143,8 @@ const SltUsageMeter = new Lang.Class({
   _init: function () {
     this.parent(0.0);
 
-    // let gicon = Gio.icon_new_for_string(Me.path + "/assets/ext_icon.png");
-    let icon = new St.Icon({ style_class: "ext_icon" });
+    let gicon = Gio.icon_new_for_string(Me.path + "/assets/ext_icon.png");
+    let icon = new St.Icon({ gicon, icon_size: 16 });
     this.add_child(icon);
 
     let menuItem = new PopupMenu.PopupMenuItem("Check Usage");
