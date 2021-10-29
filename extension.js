@@ -5,6 +5,7 @@ const Lang = imports.lang;
 const Soup = imports.gi.Soup;
 const Gio = imports.gi.Gio;
 
+const Panel = imports.ui.panel;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 
@@ -13,6 +14,9 @@ const username = "";
 const password = "";
 const schemaId = "org.gnome.shell.extensions.slt_usage_meter";
 const expiringOffset = 30;
+
+
+var IconSize = 16;
 
 const Me = imports.misc.extensionUtils.getCurrentExtension();
 const schemaData = getSchemaValues();
@@ -144,7 +148,7 @@ const SltUsageMeter = new Lang.Class({
     this.parent(0.0);
 
     let gicon = Gio.icon_new_for_string(Me.path + "/assets/ext_icon.png");
-    let icon = new St.Icon({ gicon, icon_size: 16 });
+    let icon = new St.Icon({ gicon, icon_size: IconSize });
     this.add_child(icon);
 
     let menuItem = new PopupMenu.PopupMenuItem("Check Usage");
@@ -157,6 +161,7 @@ const SltUsageMeter = new Lang.Class({
 // initialize the extension
 function init() {
   log("Slt Usage Meter extension initalized");
+  IconSize = Math.round(Panel.PANEL_ICON_SIZE * 4 / 5);
 }
 
 // enable the extension
