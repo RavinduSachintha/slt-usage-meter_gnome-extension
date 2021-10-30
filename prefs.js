@@ -1,5 +1,3 @@
-"use strict";
-
 const Gio = imports.gi.Gio;
 const Gtk = imports.gi.Gtk;
 const GObject = imports.gi.GObject;
@@ -10,12 +8,12 @@ const Me = ExtensionUtils.getCurrentExtension();
 function init() {}
 
 function buildPrefsWidget() {
-  let widget = new MyPrefsWidget();
+  const widget = new SltUsageMeterPrefsWidget();
   widget.show_all();
   return widget;
 }
 
-const MyPrefsWidget = GObject.registerClass(
+const SltUsageMeterPrefsWidget = GObject.registerClass(
   class MyPrefsWidget extends Gtk.Box {
     _init(params) {
       super._init(params);
@@ -24,7 +22,7 @@ const MyPrefsWidget = GObject.registerClass(
       this.set_spacing(15);
       this.set_orientation(Gtk.Orientation.VERTICAL);
 
-      this.connect("destroy", Gtk.main_quit);
+      // this.connect("destroy", Gtk.main_quit);
 
       let myLabel = new Gtk.Label({
         label: "Translated Text",
