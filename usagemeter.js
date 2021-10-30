@@ -5,6 +5,7 @@ const St = imports.gi.St;
 const Gio = imports.gi.Gio;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
+const ExtensionUtils = imports.misc.extensionUtils;
 const Me = imports.misc.extensionUtils.getCurrentExtension();
 
 // import custom scripts
@@ -24,10 +25,13 @@ var SltUsageMeter = new Lang.Class({
     let icon = new St.Icon({ gicon, icon_size: Cons.iconSize });
     this.add_child(icon);
 
-    let menuItem = new PopupMenu.PopupMenuItem("Check Usage");
-    menuItem.actor.connect("button-press-event", check_usage_btn_action);
+    let menuItem1 = new PopupMenu.PopupMenuItem("Check Usage");
+    menuItem1.actor.connect("button-press-event", check_usage_btn_action);
+    this.menu.addMenuItem(menuItem1);
 
-    this.menu.addMenuItem(menuItem);
+    let menuItem2 = new PopupMenu.PopupMenuItem("Settings");
+    menuItem2.connect("activate", open_settings);
+    this.menu.addMenuItem(menuItem2);
   },
 });
 
@@ -60,5 +64,11 @@ function check_usage_btn_action() {
       "SLT Usage Meter",
       `Used: ${usedData}GB | Remains: ${(limitData - usedData).toFixed(1)}GB`
     );
+  }
+}
+
+function open_settings() {
+  if (typeof ExtensionUtils.openPrefs === "function") {
+    ExtensionUtils.openPrefs();
   }
 }
