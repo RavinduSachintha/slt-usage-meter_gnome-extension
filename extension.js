@@ -9,16 +9,9 @@ const Panel = imports.ui.panel;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 
-// constants
-const username = "";
-const password = "";
-const schemaId = "org.gnome.shell.extensions.slt_usage_meter";
-const expiringOffset = 30;
-
-
-var IconSize = 16;
-
 const Me = imports.misc.extensionUtils.getCurrentExtension();
+const Cons = Me.imports.constants;
+
 const schemaData = getSchemaValues();
 
 // get the schema values
@@ -31,7 +24,7 @@ function getSchemaValues() {
     false
   );
 
-  let schemaObj = schemaSource.lookup(schemaId, true);
+  let schemaObj = schemaSource.lookup(Cons.schemaId, true);
 
   if (!schemaObj) {
     throw new Error("cannot find schemas");
@@ -48,9 +41,9 @@ function send_auth_request() {
   let authReqParams =
     `client_id=${schemaData.get_string("xibmclientid")}` +
     `&grant_type=password` +
-    `&password=${password}` +
+    `&password=${Cons.password}` +
     `&scope=scope1` +
-    `&username=${username}`;
+    `&username=${Cons.username}`;
 
   let message = Soup.Message.new("POST", url);
   message.request_headers.append("Accept", "application/json");
@@ -113,7 +106,7 @@ function check_usage_btn_action() {
   let expiresIn = schemaData.get_int("expires-in");
 
   const dateObject = new Date(0);
-  dateObject.setUTCSeconds(consentedOn + expiresIn - expiringOffset);
+  dateObject.setUTCSeconds(consentedOn + expiresIn - Cons.expiringOffset);
 
   let data = null;
 
@@ -148,7 +141,7 @@ const SltUsageMeter = new Lang.Class({
     this.parent(0.0);
 
     let gicon = Gio.icon_new_for_string(Me.path + "/assets/ext_icon.png");
-    let icon = new St.Icon({ gicon, icon_size: IconSize });
+    let icon = new St.Icon({ gicon, icon_size: Cons.iconSize });
     this.add_child(icon);
 
     let menuItem = new PopupMenu.PopupMenuItem("Check Usage");
@@ -161,7 +154,7 @@ const SltUsageMeter = new Lang.Class({
 // initialize the extension
 function init() {
   log("Slt Usage Meter extension initalized");
-  IconSize = Math.round(Panel.PANEL_ICON_SIZE * 4 / 5);
+  Cons.iconSize = Math.round((Panel.PANEL_ICON_SIZE * 4) / 5);
 }
 
 // enable the extension
