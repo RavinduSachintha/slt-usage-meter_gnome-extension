@@ -19,12 +19,8 @@ function init() {
 function enable() {
   log("Slt Usage Meter extension enabled");
   sltUsageMeter = new UsageMeter.SltUsageMeter();
-  Main.panel._addToPanelBox(
-    "SltUsageMeter",
-    sltUsageMeter,
-    1,
-    Main.panel._rightBox
-  );
+  Main.panel._addToPanelBox("SltUsageMeter", sltUsageMeter, 1,
+                            Main.panel._rightBox);
 }
 
 // disable the extension

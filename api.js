@@ -12,11 +12,11 @@ function send_auth_request() {
 
   let url = Utils.schemaData.get_string("auth-url");
   let authReqParams =
-    `client_id=${Utils.schemaData.get_string("xibmclientid")}` +
-    `&grant_type=password` +
-    `&password=${Cons.password}` +
-    `&scope=scope1` +
-    `&username=${Cons.username}`;
+      `client_id=${Utils.schemaData.get_string("xibmclientid")}` +
+      `&grant_type=password` +
+      `&password=${Cons.password}` +
+      `&scope=scope1` +
+      `&username=${Cons.username}`;
 
   let message = Soup.Message.new("POST", url);
   message.request_headers.append("Accept", "application/json");
@@ -40,10 +40,8 @@ function send_request(url, token, subscriberId, type = "GET") {
 
   let message = Soup.Message.new(type, url);
   message.request_headers.append("Authorization", `Bearer ${token}`);
-  message.request_headers.append(
-    "x-ibm-client-id",
-    Utils.schemaData.get_string("xibmclientid")
-  );
+  message.request_headers.append("x-ibm-client-id",
+                                 Utils.schemaData.get_string("xibmclientid"));
   message.request_headers.append("subscriberid", subscriberId);
   message.request_headers.set_content_type("application/json", null);
 

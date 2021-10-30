@@ -14,14 +14,14 @@ const API = Me.imports.api;
 
 // slt usage meter class
 var SltUsageMeter = new Lang.Class({
-  Name: "SltUsageMeter.indicator",
-  Extends: PanelMenu.Button,
+  Name : "SltUsageMeter.indicator",
+  Extends : PanelMenu.Button,
 
-  _init: function () {
+  _init : function() {
     this.parent(0.0);
 
     let gicon = Gio.icon_new_for_string(Me.path + "/assets/ext_icon.png");
-    let icon = new St.Icon({ gicon, icon_size: Cons.iconSize });
+    let icon = new St.Icon({gicon, icon_size : Cons.iconSize});
     this.add_child(icon);
 
     let menuItem = new PopupMenu.PopupMenuItem("Check Usage");
@@ -56,9 +56,7 @@ function check_usage_btn_action() {
   if (data) {
     let limitData = parseFloat(data.package_summary.limit);
     let usedData = parseFloat(data.package_summary.used);
-    Main.notify(
-      "SLT Usage Meter",
-      `Used: ${usedData}GB | Remains: ${(limitData - usedData).toFixed(1)}GB`
-    );
+    Main.notify("SLT Usage Meter", `Used: ${usedData}GB | Remains: ${
+                                       (limitData - usedData).toFixed(1)}GB`);
   }
 }
