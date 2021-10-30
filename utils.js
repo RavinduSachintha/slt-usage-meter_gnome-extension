@@ -12,7 +12,10 @@ function getSchemaValues() {
   let GioSSS = Gio.SettingsSchemaSource;
 
   let schemaSource = GioSSS.new_from_directory(
-      Me.dir.get_child("schemas").get_path(), GioSSS.get_default(), false);
+    Me.dir.get_child("schemas").get_path(),
+    GioSSS.get_default(),
+    false
+  );
 
   let schemaObj = schemaSource.lookup(Cons.schemaId, true);
 
@@ -20,7 +23,7 @@ function getSchemaValues() {
     throw new Error("cannot find schemas");
   }
 
-  return new Gio.Settings({settings_schema : schemaObj});
+  return new Gio.Settings({ settings_schema: schemaObj });
 }
 
 // set authentication request data to the schema
