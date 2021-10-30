@@ -154,7 +154,7 @@ const SltUsageMeter = new Lang.Class({
 // initialize the extension
 function init() {
   log("Slt Usage Meter extension initalized");
-  Cons.iconSize = Math.round(Panel.PANEL_ICON_SIZE * 4 / 5);
+  Cons.iconSize = Math.round((Panel.PANEL_ICON_SIZE * 4) / 5);
 }
 
 // enable the extension
