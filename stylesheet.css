@@ -1,10 +1,7 @@
 /* Add your custom extension styling here */
 
 .ext_icon {
-  background-image: url("assets/ext_icon.png");
-  background-size: 15px;
-  height: 18px;
-  width: 18px;
+  margin-left: 10px;
 }
 
 .bg-color {
