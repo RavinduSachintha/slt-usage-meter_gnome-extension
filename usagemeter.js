@@ -23,6 +23,7 @@ var SltUsageMeter = new Lang.Class({
   _init: function () {
     this.parent(0.0);
     this.remaining_percentage = 100;
+    this.refresh_time = 5;
 
     let box = new St.BoxLayout();
 
@@ -52,13 +53,20 @@ var SltUsageMeter = new Lang.Class({
 
   updateUI: function () {
     this.remaining_percentage = usage_label_update();
+
+    if (this.remaining_percentage == undefined) {
+      this.refresh_time = 90;
+    } else {
+      this.refresh_time = 5;
+    }
+
     this.label.set_text(` ${this.remaining_percentage}%`);
   },
 
   _refresh: function () {
     this.updateUI();
     this._removeTimeout();
-    this._timeout = Mainloop.timeout_add_seconds(5, Lang.bind(this, this._refresh));
+    this._timeout = Mainloop.timeout_add_seconds(this.refresh_time, Lang.bind(this, this._refresh));
     return true;
   },
 
