@@ -22,25 +22,10 @@ var SltUsageMeter = new Lang.Class({
 
   _init: function () {
     this.parent(0.0);
-    this.remaining_percentage = 100;
-    this.refresh_time = 5;
-
-    let box = new St.BoxLayout();
 
     let gicon = Gio.icon_new_for_string(Me.path + "/assets/ext_icon.png");
-    let icon = new St.Icon({ gicon, icon_size: Cons.iconSize, style_class: 'ext_icon' });
-
-    this.label = new St.Label({
-      text: ` ${this.remaining_percentage}%`,
-      y_expand: true,
-      y_align: Clutter.ActorAlign.CENTER
-    });
-
-    this._refresh();
-
-    box.add(icon);
-    box.add(this.label);
-    this.add_child(box);
+    let icon = new St.Icon({ gicon, icon_size: Cons.iconSize });
+    this.add_child(icon);
 
     let menuItem1 = new PopupMenu.PopupMenuItem("Check Usage");
     menuItem1.actor.connect("button-press-event", check_usage_btn_action);
@@ -49,32 +34,6 @@ var SltUsageMeter = new Lang.Class({
     let menuItem2 = new PopupMenu.PopupMenuItem("Settings");
     menuItem2.connect("activate", open_settings);
     this.menu.addMenuItem(menuItem2);
-  },
-
-  updateUI: function () {
-    this.remaining_percentage = usage_label_update();
-
-    if (this.remaining_percentage == undefined) {
-      this.refresh_time = 90;
-    } else {
-      this.refresh_time = 5;
-    }
-
-    this.label.set_text(` ${this.remaining_percentage}%`);
-  },
-
-  _refresh: function () {
-    this.updateUI();
-    this._removeTimeout();
-    this._timeout = Mainloop.timeout_add_seconds(this.refresh_time, Lang.bind(this, this._refresh));
-    return true;
-  },
-
-  _removeTimeout: function () {
-    if (this._timeout) {
-      Mainloop.source_remove(this._timeout);
-      this._timeout = null;
-    }
   }
 });
 
@@ -88,16 +47,6 @@ function check_usage_btn_action() {
       "SLT Usage Meter",
       `Used: ${usedData}GB | Remains: ${(limitData - usedData).toFixed(1)}GB`
     );
-  }
-}
-
-// usage icon label
-function usage_label_update() {
-  let data = get_usage_data_from_api();
-  if (data) {
-    let limitData = parseFloat(data.package_summary.limit);
-    let usedData = parseFloat(data.package_summary.used);
-    return Math.round(100 * (limitData - usedData) / limitData);
   }
 }
 

@@ -24,7 +24,7 @@ function send_auth_request() {
 
   let responseCode = soupSyncSession.send_message(message);
   let out;
-  if (responseCode == 200) {
+  if (responseCode === 200) {
     try {
       out = JSON.parse(message["response-body"].data);
     } catch (error) {
@@ -50,7 +50,7 @@ function send_request(url, token, subscriberId, type = "GET") {
   let responseCode = soupSyncSession.send_message(message);
   let out;
 
-  if (responseCode == 200) {
+  if (responseCode === 200) {
     try {
       out = JSON.parse(message["response-body"].data);
     } catch (error) {
