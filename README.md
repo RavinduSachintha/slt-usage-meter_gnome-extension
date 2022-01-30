@@ -1,4 +1,4 @@
-# Gnome Shell Extension : SLT Usage Meter (Under development)
+# Gnome Shell Extension : SLT Usage Meter ![Project Status](https://img.shields.io/badge/Status-Under%20Development-blue.svg)
 
 ## Screentshots 
 ![action window](./assets/img1.jpg)
