@@ -37,3 +37,9 @@
 
 9. To check extension logs,
    - `journalctl -f -o cat /usr/bin/gnome-shell`
+
+10. Run prefs only
+   - `gnome-extensions prefs slt_usage_meter@ravindu.dhahas.com`
+
+11. To check prefs logs,
+   - `journalctl -f -o cat /usr/bin/gjs`
