@@ -1,4 +1,6 @@
 /* Add your custom extension styling here */
 
-.ext_icon {
+.btn {
+    border: 2px solid red;
+    font-weight: bold;
 }
