@@ -19,8 +19,12 @@ function buildPrefsWidget() {
   GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
     // In GTK4 (GNOME 40), call `get_root()` instead of `get_toplevel()`
     let window = widget.get_toplevel();
-    window.resize(400, 200);
-    // window.set_resizable(false);
+
+    // Remove minimize & maximize buttons
+    window.set_type_hint(1);
+
+    window.set_size_request(400, 300);
+    window.set_resizable(false);
 
     let headerBar = window.get_titlebar();
     headerBar.title = `${Me.metadata.name} Preferences`;
