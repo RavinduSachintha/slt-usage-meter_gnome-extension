@@ -76,3 +76,7 @@ function setPrefsCredentialBtnsSensitivity(
     btnTest.set_sensitive(true);
   }
 }
+
+function setSignalsHandlerListToSchema(schemaData, handlerList) {
+  schemaData.set_strv("handler-list", handlerList);
+}

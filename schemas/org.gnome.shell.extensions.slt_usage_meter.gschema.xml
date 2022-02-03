@@ -5,80 +5,86 @@
     
     <key name="access-token" type="s">
       <default>"access_token"</default>
-      <summary>summary</summary>
+      <summary>access token</summary>
       <description>JWT token for login</description>
     </key>
 
     <key name="token-type" type="s">
       <default>"token_type"</default>
-      <summary>summary</summary>
-      <description>JWT token for login</description>
+      <summary>token type</summary>
+      <description>acess token type</description>
     </key>
 
     <key name="subscriber-id" type="s">
       <default>"subscriber_id"</default>
-      <summary>summary</summary>
-      <description>JWT token for login</description>
+      <summary>subscriber id</summary>
+      <description>subscriber id for the API</description>
     </key>
 
     <key name="expires-in" type="i">
       <default>0</default>
-      <summary>summary</summary>
-      <description>JWT token for login</description>
+      <summary>expire timestamp</summary>
+      <description>access token expiring timestamp</description>
     </key>
 
     <key name="consented-on" type="i">
       <default>0</default>
-      <summary>summary</summary>
-      <description>JWT token for login</description>
+      <summary>consented timestamp</summary>
+      <description>access token consented timestamp</description>
     </key>
 
     <key name="scope" type="s">
       <default>"scope"</default>
-      <summary>summary</summary>
-      <description>JWT token for login</description>
+      <summary>scope</summary>
+      <description>scope for the access token</description>
     </key>
 
     <key name="refresh-token" type="s">
       <default>"refresh_token"</default>
-      <summary>summary</summary>
-      <description>JWT token for login</description>
+      <summary>refresh token</summary>
+      <description>refresh token for the access token</description>
     </key>
 
     <key name="refresh-token-expires-in" type="i">
       <default>0</default>
-      <summary>summary</summary>
-      <description>JWT token for login</description>
+      <summary>refresh token expire timestamp</summary>
+      <description>expiring timestamp for the refresh token</description>
     </key>
 
     <key name="xibmclientid" type="s">
       <default>"622cc49f-6067-415e-82cd-04b1b76f6377"</default>
-      <summary>summary</summary>
-      <description>description</description>
+      <summary>client id</summary>
+      <description>API access client id</description>
     </key>
 
     <key name="vas-data-url" type="s">
       <default>"https://omniscapp.slt.lk/mobitelint/slt/sltvasservices/dashboard/vas_data"</default>
-      <summary>summary</summary>
-      <description>description</description>
+      <summary>vas data url</summary>
+      <description>data url for the API</description>
     </key>
 
     <key name="auth-url" type="s">
       <default>"https://omniscapp.slt.lk/mobitelint/slt/sltvasoauth/oauth2/token"</default>
-      <summary>summary</summary>
-      <description>description</description>
+      <summary>auth url</summary>
+      <description>authentication url for the API</description>
     </key>
 
     <key name="username" type="s">
       <default>""</default>
-      <summary>summary</summary>
-      <description>description</description>
+      <summary>username</summary>
+      <description>SLT account username</description>
     </key>
 
     <key name="password" type="s">
       <default>""</default>
-      <summary>summary</summary>
-      <description>description</description>
+      <summary>password</summary>
+      <description>SLT account password</description>
+    </key>
+
+    <key name="handler-list" type="as">
+      <default>[]</default>
+      <summary>signal handler list</summary>
+      <description>list of signal handlers</description>
     </key>
 
   </schema>

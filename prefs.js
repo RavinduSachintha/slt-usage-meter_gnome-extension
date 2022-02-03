@@ -40,6 +40,8 @@ const SltUsageMeterPrefsWidget = GObject.registerClass(
     _init(params) {
       super._init(params);
 
+      let signalsHandlerList = [];
+
       let builder = new Gtk.Builder();
       builder.set_translation_domain("rs");
       builder.add_from_file(Me.path + "/prefs.ui");
@@ -121,8 +123,11 @@ const SltUsageMeterPrefsWidget = GObject.registerClass(
       };
 
       builder.connect_signals_full((builder, object, signal, handler) => {
+        signalsHandlerList.push(handler);
         object.connect(signal, SignalHandler[handler].bind(this));
       });
+
+      Utils.setSignalsHandlerListToSchema(Utils.schemaData, signalsHandlerList);
 
       this.add(builder.get_object("main_prefs"));
     }
