@@ -21,6 +21,7 @@
 - gnome-extensions
 - git
 - vscode(prefers)
+- glade UI designing tool
 
 ## Development
 
