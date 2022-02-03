@@ -27,7 +27,7 @@ function getSchemaValues() {
 }
 
 // set authentication request data to the schema
-function setAuthDataFromSchema(schemaData, data) {
+function setAuthDataToSchema(schemaData, data) {
   schemaData.set_string("access-token", data.access_token);
   schemaData.set_string("token-type", data.token_type);
   schemaData.set_string("subscriber-id", data.metadata);
@@ -36,4 +36,9 @@ function setAuthDataFromSchema(schemaData, data) {
   schemaData.set_string("scope", data.scope);
   schemaData.set_string("refresh-token", data.refresh_token);
   schemaData.set_int("refresh-token-expires-in", data.refresh_token_expires_in);
+}
+
+function setAuthCredentials(schemaData, data) {
+  schemaData.set_string("username", data.username);
+  schemaData.set_string("password", data.password);
 }

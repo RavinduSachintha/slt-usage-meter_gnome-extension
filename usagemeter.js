@@ -62,7 +62,7 @@ function get_usage_data_from_api() {
   if (dateObject <= new Date()) {
     data = API.send_auth_request();
     if (data) {
-      Utils.setAuthDataFromSchema(Utils.schemaData, data);
+      Utils.setAuthDataToSchema(Utils.schemaData, data);
     }
   }
 

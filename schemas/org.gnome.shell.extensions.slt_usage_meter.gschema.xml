@@ -69,5 +69,17 @@
       <description>description</description>
     </key>
 
+    <key name="username" type="s">
+      <default>""</default>
+      <summary>summary</summary>
+      <description>description</description>
+    </key>
+
+    <key name="password" type="s">
+      <default>""</default>
+      <summary>summary</summary>
+      <description>description</description>
+    </key>
+
   </schema>
 </schemalist>

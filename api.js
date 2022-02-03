@@ -8,15 +8,16 @@ const Utils = Me.imports.utils;
 
 // send login request
 function send_auth_request() {
+  log(Utils.schemaData.get_string("password"))
   let soupSyncSession = new Soup.SessionSync();
 
   let url = Utils.schemaData.get_string("auth-url");
   let authReqParams =
     `client_id=${Utils.schemaData.get_string("xibmclientid")}` +
     `&grant_type=password` +
-    `&password=${Cons.password}` +
+    `&password=${Utils.schemaData.get_string("password")}` +
     `&scope=scope1` +
-    `&username=${Cons.username}`;
+    `&username=${Utils.schemaData.get_string("username")}`;
 
   let message = Soup.Message.new("POST", url);
   message.request_headers.append("Accept", "application/json");
