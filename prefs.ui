@@ -36,10 +36,10 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="entUsername1">
+                  <object class="GtkEntry" id="entUsername">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <signal name="changed" handler="entUsername1_changed_cb" swapped="no"/>
+                    <signal name="changed" handler="entUsername_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -74,12 +74,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="entPassword1">
+                  <object class="GtkEntry" id="entPassword">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="visibility">False</property>
                     <property name="invisible-char">•</property>
-                    <signal name="changed" handler="entPassword1_changed_cb" swapped="no"/>
+                    <signal name="changed" handler="entPassword_changed_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -105,8 +105,11 @@
                   <object class="GtkButton" id="btnClear">
                     <property name="label" translatable="yes">Clear</property>
                     <property name="visible">True</property>
+                    <property name="sensitive">False</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="always-show-image">True</property>
+                    <signal name="clicked" handler="btnClear_clicked_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -118,14 +121,30 @@
                   <object class="GtkButton" id="btnSave">
                     <property name="label" translatable="yes">Save</property>
                     <property name="visible">True</property>
+                    <property name="sensitive">False</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="always-show-image">True</property>
                     <signal name="clicked" handler="btnSave_clicked_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
                     <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="btnTest">
+                    <property name="label" translatable="yes">Test</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <signal name="clicked" handler="btnTest_clicked_cb" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>
@@ -142,16 +161,27 @@
                 <property name="halign">center</property>
                 <property name="margin-bottom">5</property>
                 <child>
-                  <object class="GtkLabel" id="lblStatus">
+                  <object class="GtkSpinner" id="spinStatus">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="margin-bottom">2</property>
-                    <property name="label" translatable="yes">Status</property>
+                    <property name="margin-end">5</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="lblStatus">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="margin-bottom">2</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
               </object>

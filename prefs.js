@@ -7,6 +7,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
 const Utils = Me.imports.utils;
+const API = Me.imports.api;
 
 function init() {}
 
@@ -41,27 +42,78 @@ const SltUsageMeterPrefsWidget = GObject.registerClass(
 
       // this.connect("destroy", Gtk.main_quit);
 
-      let entUsername = null;
-      let entPassword = null;
+      let btnSave = builder.get_object("btnSave");
+      let btnClear = builder.get_object("btnClear");
+      let btnTest = builder.get_object("btnTest");
+
+      let entUsername = builder.get_object("entUsername");
+      let entPassword = builder.get_object("entPassword");
+
+      let lblStatus = builder.get_object("lblStatus");
+      let spinStatus = builder.get_object("spinStatus");
 
       let SignalHandler = {
-        entUsername1_changed_cb(w) {
-          entUsername = w;
+        entUsername_changed_cb() {
+          Utils.setPrefsCredentialBtnsSensitivity(
+            btnSave,
+            btnClear,
+            btnTest,
+            entUsername,
+            entPassword,
+            lblStatus
+          );
         },
 
-        entPassword1_changed_cb(w) {
-          entPassword = w;
+        entPassword_changed_cb() {
+          Utils.setPrefsCredentialBtnsSensitivity(
+            btnSave,
+            btnClear,
+            btnTest,
+            entUsername,
+            entPassword,
+            lblStatus
+          );
         },
 
         btnSave_clicked_cb() {
+          spinStatus.start();
+
           Utils.setAuthCredentials(Utils.schemaData, {
             username: entUsername.get_text(),
-            password: entPassword.get_text()
+            password: entPassword.get_text(),
           });
 
           entUsername.set_text("");
           entPassword.set_text("");
-        }
+          lblStatus.set_text("Credentials are successfully saved.");
+
+          spinStatus.stop();
+        },
+
+        btnClear_clicked_cb() {
+          entUsername.set_text("");
+          entPassword.set_text("");
+          lblStatus.set_text("");
+        },
+
+        btnTest_clicked_cb() {
+          spinStatus.start();
+
+          let data = API.send_auth_request();
+
+          if (
+            (data != undefined || data != null) &&
+            data.access_token != null
+          ) {
+            lblStatus.set_text(
+              "Stored credentials are successfully authenticated."
+            );
+          } else {
+            lblStatus.set_text("Stored credentials are incorrect. Try again.");
+          }
+
+          spinStatus.stop();
+        },
       };
 
       builder.connect_signals_full((builder, object, signal, handler) => {

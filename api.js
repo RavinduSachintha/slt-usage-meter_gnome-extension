@@ -8,7 +8,6 @@ const Utils = Me.imports.utils;
 
 // send login request
 function send_auth_request() {
-  log(Utils.schemaData.get_string("password"))
   let soupSyncSession = new Soup.SessionSync();
 
   let url = Utils.schemaData.get_string("auth-url");
